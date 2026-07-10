@@ -8,23 +8,21 @@
     <!-- Favicon Logo Karanganyar -->
     <link rel="icon" href="https://i.ibb.co.com/rGLcRm9W/500px-Seal-of-Karanganyar-Regency-svg.png" type="image/png">
     
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            overflow: hidden; /* Mencegah scrollbar ganda */
-            background-color: #333; /* Background gelap agar selaras saat loading */
+            overflow: hidden; 
+            background-color: #333; 
         }
         
         iframe {
             width: 100%;
-            /* Trik menyembunyikan banner GAS: Tinggi ditambah, posisi ditarik ke atas */
-            height: calc(100% + 38px);
+            height: calc(100% + 38px); /* Menambah tinggi untuk kompensasi tarikan ke atas */
             border: none;
             position: absolute;
-            top: -38px; 
+            top: -38px; /* Menarik iframe ke atas untuk menyembunyikan warning banner GAS */
             left: 0;
             z-index: 10;
         }
@@ -36,7 +34,7 @@
             align-items: center;
             height: 100vh;
             color: white;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             position: absolute;
             width: 100%;
             z-index: 1;
@@ -45,17 +43,36 @@
 </head>
 <body>
 
-    <!-- Animasi Loading saat menunggu respons dari Google -->
+    <!-- Animasi Loading (Pakai SVG Inline agar tidak butuh tailwind external) -->
     <div class="loading-container">
-        <svg class="animate-spin h-10 w-10 text-white mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        <svg style="animation: spin 1s linear infinite; height: 40px; width: 40px; color: white; margin-bottom: 1rem;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle style="opacity: 0.25;" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path style="opacity: 0.75;" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
-        <p class="font-semibold tracking-wide">Memuat Sistem...</p>
+        <p style="font-weight: 600; letter-spacing: 0.05em;">Memuat Sistem...</p>
+        <style>@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }</style>
     </div>
 
-    <!-- Masukkan URL Web App GAS hasil New Deployment di bagian src ini -->
-    <iframe src="https://script.google.com/macros/s/AKfycbxu8sV3xJnsYkFFOM-MXfzcugoHJ8lgo8e5Iz6U0a_NEWgW-rzxV3fVYZ4t8u7R71k/exec" allow="fullscreen" allowfullscreen></iframe>
+    <!-- Iframe disiapkan tanpa src awal -->
+    <iframe id="gas-frame" allow="fullscreen" allowfullscreen></iframe>
+
+    <script>
+        // MASUKKAN URL WEB APP GAS (HASIL DEPLOY BARU) DI BAWAH INI:
+        const gasAppUrl = "https://script.google.com/macros/s/AKfycbxnJSf-SY5cSmHWgp-bV2fU6HVKN3uoTQPj6XQmmIAe_1dHGeZ10U2aO1hogwAp0GuJ/exec";
+
+        // Baca apakah ada parameter sessionId dari URL GitHub
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('sessionId');
+
+        // Rangkai URL akhir untuk dimasukkan ke iframe
+        let finalIframeUrl = gasAppUrl;
+        if (sessionId) {
+            finalIframeUrl += "?sessionId=" + sessionId;
+        }
+
+        // Tembak URL ke dalam iframe
+        document.getElementById('gas-frame').src = finalIframeUrl;
+    </script>
 
 </body>
 </html>
