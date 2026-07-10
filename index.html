@@ -14,18 +14,21 @@
             margin: 0;
             padding: 0;
             height: 100%;
-            overflow: hidden; /* Mencegah munculnya scrollbar ganda dari iframe */
-            background-color: #333; /* Warna gelap senada dengan background GAS */
+            overflow: hidden; /* Mencegah scrollbar ganda */
+            background-color: #333; /* Background gelap agar selaras saat loading */
         }
+        
         iframe {
             width: 100%;
-            height: 100%;
+            /* Trik menyembunyikan banner GAS: Tinggi ditambah, posisi ditarik ke atas */
+            height: calc(100% + 38px);
             border: none;
             position: absolute;
-            top: 0;
+            top: -38px; 
             left: 0;
             z-index: 10;
         }
+        
         .loading-container {
             display: flex;
             flex-direction: column;
@@ -33,7 +36,7 @@
             align-items: center;
             height: 100vh;
             color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
             position: absolute;
             width: 100%;
             z-index: 1;
@@ -42,7 +45,7 @@
 </head>
 <body>
 
-    <!-- Indikator loading saat iframe mengambil data dari server Google -->
+    <!-- Animasi Loading saat menunggu respons dari Google -->
     <div class="loading-container">
         <svg class="animate-spin h-10 w-10 text-white mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -51,7 +54,7 @@
         <p class="font-semibold tracking-wide">Memuat Sistem...</p>
     </div>
 
-    <!-- Ganti URL di bawah ini dengan link Web App /exec Anda yang baru -->
+    <!-- Masukkan URL Web App GAS hasil New Deployment di bagian src ini -->
     <iframe src="https://script.google.com/macros/s/AKfycbzYliEQtguih3BJFyDU-Wf6-z4gET_wYzVOkPP0GRCGTW3TolQkCIvJ-QWnnK4ivLo/exec" allow="fullscreen" allowfullscreen></iframe>
 
 </body>
