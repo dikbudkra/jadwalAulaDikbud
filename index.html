@@ -40,6 +40,12 @@
             z-index: 1;
         }
     </style>
+    <script>
+  // Menghapus tulisan ?sessionId=... dari URL agar tidak bisa di-copy orang
+  if (window.location.search.includes("sessionId=")) {
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+</script>
 </head>
 <body>
 
